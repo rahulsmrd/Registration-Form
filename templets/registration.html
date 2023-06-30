@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{%block title%}Register{%endblock%}
+{%block register%}active{%endblock%}
+{%block body_code%}
+
+<div class="container">
+{% if registered %}
+<h1>Thankyou For Registering !!! </h1>
+{% else %}
+<h1>Register here ... </h1>
+<h3>Fill out the form :</h3>
+<div class="container">
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{user_form.as_p}}
+    {{profile_form.as_p}}
+    <button type="submit" class="btn btn-success">Register</button>
+
+</form>
+<img src="{{ info.URL }}" alt="">
+</div>
+{% endif %}
+
+</div>
+
+{%endblock%}
