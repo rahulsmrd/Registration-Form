@@ -17,3 +17,6 @@ class user_model(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+    
+class username_list(models.Model):
+    username = models.CharField(max_length=50)

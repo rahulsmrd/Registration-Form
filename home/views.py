@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from home.forms import User_display, userProfileInfo
+from home.models import username_list
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -12,7 +13,7 @@ user_logged_in = False
 def index(request):
     return render(request, 'index.html')
 
-context={}
+context={'username':''}
 def register(request):
     registered = False
 
@@ -59,8 +60,8 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-
-                context['username'] = username
+                ins=username_list(username=username)
+                ins.save()
                 return redirect('home:index')
             else:
                 return HttpResponse("Account Not Active")
@@ -77,11 +78,15 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
+    username_list.objects.all().delete()
     return redirect(reverse("home:index"))
 
 
 def dashboard(request):
-    if context['username']:
-        user_data=User.objects.filter(username=context['username'])
-        return render(request, 'dashboard.html', {"data": user_data})
+    username=username_list.objects.values_list()
+    if len(username):
+        user_data=User.objects.values_list()
+        user_data=user_data.filter(username=username[len(username)-1][1])
+        context={"username":user_data[0][4],'first_name':user_data[0][5],'last_name':user_data[0][6],'email':user_data[0][7],}
+        return render(request, 'dashboard.html', context)
     return render(request, 'dashboard.html')

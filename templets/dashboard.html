@@ -1,14 +1,36 @@
 {% extends 'base.html' %}
 
 {%block title%}Dashboard{%endblock%}
+{%block dashboard %}active{%endblock%}
 
 {% block body_code %}
 
 <div class="container">
 
-    <h1>hello world</h1>
-    <p>{{ data.username }}</p>
-    <p> {{ data.email }} </p>
+    <h1>Dashboard</h1>
+    <div class="container fs-5 fw-bold">
+
+
+        <div class="container m-4">
+            <label for="username">Username : </label>
+            <input type="text" name="" id="username" value="{{ username }}" readonly><br>
+        </div>
+
+        <div class="container m-4">
+            <label for="username">First Name : </label>
+            <input type="text" name="" id="first_name" value="{{ first_name }}" readonly><br>
+        </div>
+
+        <div class="container m-4">
+            <label for="username">Last Name : </label>
+            <input type="text" name="" id="last_name" value="{{ last_name }}" readonly><br>
+        </div>
+
+        <div class="container m-4">
+            <label for="username">Email : </label>
+            <input type="text" name="" id="email" value="{{ email }}" readonly>
+        </div>
+    </div>
 </div>
 
 
